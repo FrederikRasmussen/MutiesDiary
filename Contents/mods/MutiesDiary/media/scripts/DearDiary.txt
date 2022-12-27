@@ -1,0 +1,32 @@
+module Mutie
+{
+    item Diary
+    {
+        DisplayCategory = SkillBook,
+        Weight = 0.8,
+        Type = Literature,
+        DisappearOnUse = FALSE,
+        DisplayName = Diary,
+        Icon = Book,
+        StaticModel = Book,
+        WorldStaticModel = BookClosedGround,
+    }
+
+    recipe Write in Diary
+    {
+        keep Mutie.Diary,
+        keep [Recipe.GetItemTypes.Write],
+
+        Result: Mutie.Diary,
+        RemoveResultItem: true,
+
+        AnimNode: Disassemble,
+        Prop1: Source=2,
+        Prop2: Source=1,
+
+        Time: 10.0,
+        StopOnWalk: false,
+        OnCanPerform: DearDiary.hasNewExperiences,
+        OnCreate: DearDiary.writeInDiary,
+    }
+}
