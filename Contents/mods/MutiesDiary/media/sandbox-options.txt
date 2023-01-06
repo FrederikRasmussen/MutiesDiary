@@ -1,0 +1,56 @@
+VERSION = 1,
+
+    MutiesDiary.ignoredTraitNames = {};
+    MutiesDiary.ignoredRecipeNames = {};
+    MutiesDiary.musingChance = 0;
+    MutiesDiary.genericMusings = {};
+    MutiesDiary.studyMultiplier = 4.0;
+    MutiesDiary.multiplicativeTraitPenalty = true;
+    MutiesDiary.traitPenalty = 0.2;
+    MutiesDiary.penaltyFloor = 0.4;
+
+option MutiesDiary.StudyMultiplier = {
+    type = float,
+    default = 4.0,
+    min = 1.0,
+    max = 100.0,
+    page = MutiesDiary,
+    translation = MutiesDiary.StudyMultiplier,
+}
+
+option MutiesDiary.MultiplicativeTraitPenalty = {
+    type = boolean,
+    default = true,
+    page = MutiesDiary,
+    translation = MutiesDiary.MultiplicativeTraitPenalty,
+}
+
+option MutiesDiary.TraitPenalty = {
+    type = float,
+    default = 0.2,
+    min = 0.0,
+    max = 1.0,
+    translation = MutiesDiary.TraitPenalty,
+}
+
+option MutiesDiary.PenaltyFloor = {
+    type = float,
+    default = 0.4,
+    min = 0.0,
+    max = 1.0,
+    translation = MutiesDiary.PenaltyFloor
+}
+
+option MutiesDiary.IgnoredTraitNames = {
+    type = string,
+    default = ,
+    page = MutiesDiary,
+    translation = MutiesDiary.IgnoredTraitNames,
+}
+
+option MutiesDiary.IgnoredRecipeNames = {
+    type = string,
+    default = ,
+    page = MutiesDiary,
+    translation = MutiesDiary.IgnoredRecipeNames,
+}

@@ -24,9 +24,9 @@ module Mutie
         Prop1: Source=2,
         Prop2: Source=1,
 
-        Time: 10.0,
+        Time: 150.0,
         StopOnWalk: false,
-        OnCanPerform: DearDiary.hasNewExperiences,
-        OnCreate: DearDiary.writeInDiary,
+        OnCanPerform: MutiesDiary.hasNewExperiences,
+        OnCreate: MutiesDiary.writeInDiary,
     }
 }

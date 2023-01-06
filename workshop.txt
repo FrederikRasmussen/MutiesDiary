@@ -1,5 +1,5 @@
 version=1
-title=Mutie's Dear Diary, Today I...
+title=Mutie's Diary
 description=Write your experiences down in a diary, and recover XP earned at a later time.
 tags=
 visibility=public
