@@ -7,7 +7,7 @@ function ISReadABook:new(character, item, time, study)
     ---@type MutiesDiary.Diary
     local diary = MutiesDiary.Diary:new(item);
     if not diary then
-        originalISReadABookNew(self, character, item, time);
+        return originalISReadABookNew(self, character, item, time);
     end
 
     local action;
@@ -35,6 +35,7 @@ function ISReadABook:new(character, item, time, study)
         item:setNumberOfPages(-1);
         action.maxTime = 0;
         action.skip = true;
+        character:setSayLine("I've already read what I can.");
     else
         item:setNumberOfPages(action.numberOfEntries);
         character:setAlreadyReadPages(
@@ -45,7 +46,7 @@ function ISReadABook:new(character, item, time, study)
     return action;
 end
 
-local function updateReadStatus(action)
+local function updateReadStatus(action, resetPageCount)
     ---@type MutiesDiary.Diary
     local diary = MutiesDiary.Diary:new(action.item);
     if not diary then return end
@@ -72,17 +73,20 @@ local function updateReadStatus(action)
     else
         action.unreadEntries = diary:unreadEntries(player);
     end
+
+    if resetPageCount then
+        action.item:setNumberOfPages(-1);
+    end
 end
 
 local originalISReadABooKUpdate = ISReadABook.update
 function ISReadABook:update()
     originalISReadABooKUpdate(self);
-    updateReadStatus(self);
+    updateReadStatus(self, false);
 end
 
 local originalISReadABookStop = ISReadABook.stop;
 function ISReadABook:stop()
     originalISReadABookStop(self);
-    updateReadStatus(self);
-    self.item:setNumberOfPages(-1);
+    updateReadStatus(self, true);
 end

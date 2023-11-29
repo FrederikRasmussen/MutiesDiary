@@ -1,0 +1,21 @@
+Sandbox_EN = {
+    Sandbox_MutiesDiary.StudyMultiplier = "Bonus XP for Study",
+    Sandbox_MutiesDiary.StudyMultiplier_tooltip = "How large a bonus should be awarded when studying? 2.0 will result in 300% XP earned until the boost runs out",
+
+    Sandbox_MutiesDiary.MultiplicativeTraitPenalty = "Multiplicative Trait Penalty",
+    Sandbox_MutiesDiary.MultiplicativeTraitPenalty_tooltip = "Should trait penalties be applied multiplicatively? (E.g penalty = 0.8 * 0.8 * 0.8 instead of 1.0 - 0.2 - 0.2 - 0.2.",
+
+    Sandbox_MutiesDiary.TraitPenalty = "XP Recovery Penalty per Different Trait",
+    Sandbox_MutiesDiary.TraitPenalty_tooltip = "The penalty applied for each trait you have in difference with the Diary entry you're reading. A value of 0.2 means that you lose out on 20% of XP per trait's difference.",
+
+    Sandbox_MutiesDiary.PenaltyFloor = "Minimum XP Recovered Ratio",
+    Sandbox_MutiesDiary.PenaltyFloor_tooltip = "The floor for penalties, regardless of number of traits difference. At 1.0 there are no penalties, at 0.0 you can become so different you can recover nothing.",
+
+    Sandbox_MutiesDiary.IgnoredTraitNames = "Traits with no Penalty",
+    Sandbox_MutiesDiary.IgnoredTraitNames_tooltip = "A list of traits, separated with ; that never result in XP recovery penalties.",
+
+    Sandbox_MutiesDiary.IgnoredRecipeNames = "Irrecoverable Recipes",
+    Sandbox_MutiesDiary.IgnoredRecipeNames_tooltip = "A list of recipe names, separated with ; that can never be written or recovered from diaries.",
+
+    Sandbox_MutiesDiary = "Mutie's Diary"
+}

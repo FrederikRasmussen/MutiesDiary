@@ -11,7 +11,7 @@ function MutiesDiary.addXP(character, perk, amount)
     if skillBoost > 0.0 then
         if amount > skillBoost then
             player:skillBoosts()[perk:getName()] = 0.0;
-            skillBoost = amount;
+            amount = skillBoost;
         else
             player:skillBoosts()[perk:getName()] = skillBoost - amount;
         end

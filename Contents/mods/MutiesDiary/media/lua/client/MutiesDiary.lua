@@ -15,7 +15,17 @@ function MutiesDiary.loadModOptions()
 end
 
 function MutiesDiary.loadSandboxVars()
-
+    local sandbox = SandboxVars.MutiesDiary;
+    MutiesDiary.studyMultiplier = sandbox.StudyMultiplier or MutiesDiary.studyMultiplier;
+    MutiesDiary.multiplicativeTraitPenalty = sandbox.MultiplicativeTraitPenalty or MutiesDiary.multiplicativeTraitPenalty;
+    MutiesDiary.traitPenalty = sandbox.TraitPenalty or MutiesDiary.traitPenalty;
+    MutiesDiary.penaltyFloor = sandbox.PenaltyFloor or MutiesDiary.penaltyFloor;
+    for trait in string.gmatch(sandbox.IgnoredTraitNames, ";") do
+        table.insert(MutiesDiary.ignoredTraitNames, trait);
+    end
+    for recipe in string.gmatch(sandbox.IgnoredRecipeNames, ";") do
+        table.insert(MutiesDiary.ignoredRecipeNames, recipe);
+    end
 end
 
 function MutiesDiary.loadSettings()
@@ -30,13 +40,7 @@ function MutiesDiary.loadSettings()
     MutiesDiary.loadModOptions();
     MutiesDiary.loadSandboxVars();
 end
-Events.OnInitGlobalModData(MutiesDiary.loadSettings);
-
----@param item InventoryItem
----@return boolean
-function MutiesDiary.isDiary(item)
-    return item:getFullType() == "Mutie.Diary";
-end
+Events.OnInitGlobalModData.Add(MutiesDiary.loadSettings);
 
 ---@param player MutiesDiary.Player
 ---@param entry table

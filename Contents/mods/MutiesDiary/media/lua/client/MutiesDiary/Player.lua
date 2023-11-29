@@ -154,7 +154,7 @@ function MutiesDiary.Player:readEntry(diary, entry)
     local traits = self:traits();
     local traitSet = {};
     for i = 1, #traits do
-        traitSet[trait[i]] = true;
+        traitSet[traits[i]] = true;
     end
     local traitDifference = 0;
     for i = 1, #entry.traits do

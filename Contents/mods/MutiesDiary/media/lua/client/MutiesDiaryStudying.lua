@@ -23,11 +23,13 @@ function MutiesDiaryContextMenu.addStudyContextForDiary(playerNum, context, item
         ---@type MutiesDiary.Diary
         local diary = MutiesDiary.Diary:new(item);
         if diary then
-            context:addOption(
+            local option = context:addOption(
                     getText("IGUI_Study"),
                     item,
                     studyDiaryEntry, playerNum
             );
+            option.iconTexture = getTexture("media/ui/icons/School.png");
+            return option;
         end
     end
 end

@@ -17,13 +17,13 @@ local function addRenameContextForSingleItem(character, context, item)
     local player = MutiesDiary.Player:new(character);
     if not diary:ownedBy(player) then return false end
 
-    context:addOption(
+    local option = context:addOption(
             getText("IGUI_Rename"),
             item,
             MutiesDiaryContextMenu.onRenameDiary, player
     );
-
-    return true;
+    option.iconTexture = getTexture("media/ui/icons/Drive File Rename Outline.png");
+    return option;
 end
 
 function MutiesDiaryContextMenu.addRenameContext(playerNum, context, items)

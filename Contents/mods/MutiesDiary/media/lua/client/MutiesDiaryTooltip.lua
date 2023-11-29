@@ -37,7 +37,10 @@ function MutiesDiary.interpretDiaryForTooltip(diary)
     for i = 1, #skills do
         local skill = skills[i];
         local xp = skillXP[skill];
-        text = text .. skill .. " (" .. xp .. "xp)\n";
+        local xpText = string.format("%.2f", xp);
+        xpText = string.gsub(xpText, "%.00", "");
+        xpText = string.gsub(xpText, "(%.%d)0", "%1")
+        text = string.format("%s%s (%sxp)\n", text, skill, xpText);
     end
 
     local player = MutiesDiary.Player:new(getPlayer());

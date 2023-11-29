@@ -1,18 +1,9 @@
 VERSION = 1,
 
-    MutiesDiary.ignoredTraitNames = {};
-    MutiesDiary.ignoredRecipeNames = {};
-    MutiesDiary.musingChance = 0;
-    MutiesDiary.genericMusings = {};
-    MutiesDiary.studyMultiplier = 4.0;
-    MutiesDiary.multiplicativeTraitPenalty = true;
-    MutiesDiary.traitPenalty = 0.2;
-    MutiesDiary.penaltyFloor = 0.4;
-
 option MutiesDiary.StudyMultiplier = {
-    type = float,
-    default = 4.0,
-    min = 1.0,
+    type = double,
+    default = 1.0,
+    min = 0.0,
     max = 100.0,
     page = MutiesDiary,
     translation = MutiesDiary.StudyMultiplier,
@@ -26,31 +17,33 @@ option MutiesDiary.MultiplicativeTraitPenalty = {
 }
 
 option MutiesDiary.TraitPenalty = {
-    type = float,
+    type = double,
     default = 0.2,
     min = 0.0,
     max = 1.0,
+    page = MutiesDiary,
     translation = MutiesDiary.TraitPenalty,
 }
 
 option MutiesDiary.PenaltyFloor = {
-    type = float,
+    type = double,
     default = 0.4,
     min = 0.0,
     max = 1.0,
-    translation = MutiesDiary.PenaltyFloor
+    page = MutiesDiary,
+    translation = MutiesDiary.PenaltyFloor,
 }
 
 option MutiesDiary.IgnoredTraitNames = {
     type = string,
-    default = ,
+    default =Athletic;Fit;Stout;Strong;Feeble;Out of Shape;Obese;Overweight;Underweight;Unfit;Very Underweight;Weak,
     page = MutiesDiary,
     translation = MutiesDiary.IgnoredTraitNames,
 }
 
 option MutiesDiary.IgnoredRecipeNames = {
     type = string,
-    default = ,
+    default =,
     page = MutiesDiary,
     translation = MutiesDiary.IgnoredRecipeNames,
 }

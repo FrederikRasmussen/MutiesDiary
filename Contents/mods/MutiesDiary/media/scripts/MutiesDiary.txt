@@ -29,4 +29,13 @@ module Mutie
         OnCanPerform: MutiesDiary.hasNewExperiences,
         OnCreate: MutiesDiary.writeInDiary,
     }
+
+    recipe Use as Diary
+    {
+        Notebook/Journal,
+
+        Result: Mutie.Diary,
+
+        Time: 10.0,
+    }
 }
