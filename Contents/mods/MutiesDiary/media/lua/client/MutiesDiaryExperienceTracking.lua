@@ -1,22 +1,12 @@
 require "MutiesDiary"
 
----@param player IsoPlayer
+---@param character IsoGameCharacter
 ---@param perk PerkFactory.Perk
 ---@param amount float
 function MutiesDiary.addXP(character, perk, amount)
     ---@type MutiesDiary.Player
     local player = MutiesDiary.Player:new(character);
     player:rememberXp(getGameTime():getDay(), perk:getName(), amount);
-    local skillBoost = player:skillBoost(perk:getName());
-    if skillBoost > 0.0 then
-        if amount > skillBoost then
-            player:skillBoosts()[perk:getName()] = 0.0;
-            amount = skillBoost;
-        else
-            player:skillBoosts()[perk:getName()] = skillBoost - amount;
-        end
-        character:getXp():AddXP(perk, amount * MutiesDiary.studyMultiplier, false, true, false);
-    end
 end
 Events.AddXP.Add(MutiesDiary.addXP);
 

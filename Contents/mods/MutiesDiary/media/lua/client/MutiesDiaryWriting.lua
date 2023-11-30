@@ -7,10 +7,9 @@ function MutiesDiary.hasNewExperiences(recipe, character, item)
     ---@type MutiesDiary.Player
     local player = MutiesDiary.Player:new(character);
     if not player:canRead() then return false end
-    local daysRemembered = player:daysRemembered();
-    if #daysRemembered < 1 then return false end
-    local today = getGameTime():getDay();
-    return daysRemembered[1] ~= today;
+    local lastWritten = player:lastWritten();
+    local now = math.floor(getGameTime():getWorldAgeHours());
+    return now > lastWritten;
 end
 
 local function oldestDayRemembered(player)
@@ -43,6 +42,19 @@ local function newEntry(player, number)
     return entry;
 end
 
+---@param player MutiesDiary.Player
+---@param entry table
+local function amendEntry(player, entry)
+    entry.traits = copyTable(player:traits());
+    entry.recipes = player:knownRecipes();
+    for perkName, amount in pairs(player:rememberedXpForDay(entry.day)) do
+        entry.xp[perkName] = entry.xp[perkName] or 0.0;
+        entry.xp[perkName] = entry.xp[perkName] + amount;
+    end
+    entry.skillLevels = skillLevelsFor(player, entry.xp);
+    player:forgetDay(entry.day);
+end
+
 ---@param items ArrayList
 ---@param character IsoObject
 function MutiesDiary.writeInDiary(items, result, character)
@@ -55,9 +67,25 @@ function MutiesDiary.writeInDiary(items, result, character)
     ---@type MutiesDiary.Player
     local player = MutiesDiary.Player:new(character);
 
+    if not oldestDayRemembered(player) then
+        character:setSayLine("I have nothing to write.");
+        return;
+    end
+
     if not diary:owner() then
         diary:changeOwner(player);
     end
+
+    local dayRemembered = oldestDayRemembered(player) or getGameTime():getDay();
+    if dayRemembered == getGameTime():getDay() then
+        local newestEntry = diary:entry(diary:numberOfEntries());
+        if newestEntry and newestEntry.day == dayRemembered then
+            amendEntry(player, diary:entry(diary:numberOfEntries()));
+            player:writtenAt(math.floor(getGameTime():getWorldAgeHours()));
+            return;
+        end
+    end
     diary:addEntry(newEntry(player, diary:numberOfEntries() + 1));
     player:markNewestEntryAsRead(diary);
+    player:writtenAt(math.floor(getGameTime():getWorldAgeHours()));
 end

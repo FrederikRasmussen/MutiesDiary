@@ -31,7 +31,7 @@ function ISReadABook:new(character, item, time, study)
     end
     action.numberOfEntries = diary:numberOfEntries();
     action.numberOfReadEntries = action.numberOfEntries - #action.unreadEntries;
-    if action.numberOfEntries == action.numberOfReadEntries then
+    if false and action.numberOfEntries == action.numberOfReadEntries then
         item:setNumberOfPages(-1);
         action.maxTime = 0;
         action.skip = true;
@@ -79,7 +79,73 @@ local function updateReadStatus(action, resetPageCount)
     end
 end
 
-local originalISReadABooKUpdate = ISReadABook.update
+ISReadABook.checkMultiplier = function(self)
+    -- get all our info in the map
+    local trainedStuff = SkillBook[self.item:getSkillTrained()];
+    if trainedStuff then
+        -- every 10% we add 10% of the max multiplier
+        local readPercent = (self.item:getAlreadyReadPages() / self.item:getNumberOfPages()) * 100;
+        if readPercent > 100 then
+            readPercent = 100;
+        end
+        -- apply the multiplier to the skill
+        local multiplier = (math.floor(readPercent/10) * (self.maxMultiplier/10));
+        if multiplier > self.character:getXp():getMultiplier(trainedStuff.perk) then
+            self.character:getXp():addXpMultiplier(trainedStuff.perk, multiplier, self.item:getLvlSkillTrained(), self.item:getMaxLevelTrained());
+        end
+    end
+end
+
+---@param action ISReadABook
+local function preCheckMultiplier(action)
+    if action.skip then return end
+    local trainedStuff = SkillBook[action.item:getSkillTrained()];
+    if not trainedStuff then return end
+
+    ---@type PerkFactory.Perk
+    local perk = trainedStuff.perk;
+    local skill = perk:getName();
+
+    ---@type MutiesDiary.Player
+    local player = MutiesDiary.Player:new(action.character);
+    local boostStart, boostEnd = player:boostLevels(skill);
+    local studyMultiplier = 1.0 + player:skillBoostMultiplier(skill);
+    local currentMultiplier = player.player:getXp():getMultiplier(perk);
+    local foreignMultiplier = currentMultiplier / (studyMultiplier);
+    if currentMultiplier ~= currentMultiplier then
+        foreignMultiplier = 1.0;
+    end
+    foreignMultiplier = foreignMultiplier * 10.0;
+    foreignMultiplier = math.floor(foreignMultiplier + 0.5);
+    foreignMultiplier = foreignMultiplier / 10.0;
+    player.player:getXp():addXpMultiplier(
+            perk,
+            foreignMultiplier,
+            boostStart,
+            boostEnd
+    );
+    return player.player, perk, studyMultiplier, boostStart, boostEnd;
+end
+
+---@param player IsoPlayer
+local function postCheckMultiplier(player, perk, studyMultiplier, boostStart, boostEnd)
+    if not player then return end;
+    player:getXp():addXpMultiplier(
+            perk,
+            player:getXp():getMultiplier(perk) * studyMultiplier,
+            boostStart,
+            boostEnd
+    );
+end
+
+local originalISCheckMultiplier = ISReadABook.checkMultiplier;
+function ISReadABook:checkMultiplier()
+    local player, perk, studyMultiplier, boostStart, boostEnd = preCheckMultiplier(self);
+    originalISCheckMultiplier(self);
+    postCheckMultiplier(player, perk, studyMultiplier, boostStart, boostEnd);
+end
+
+local originalISReadABooKUpdate = ISReadABook.update;
 function ISReadABook:update()
     originalISReadABooKUpdate(self);
     updateReadStatus(self, false);

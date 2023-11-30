@@ -63,6 +63,18 @@ function MutiesDiary.Player:daysRemembered()
     return daysRemembered;
 end
 
+function MutiesDiary.Player:lastWritten()
+    local data = self:data();
+    data.lastWritten = data.lastWritten or 0.0;
+    return data.lastWritten;
+end
+
+---@param hours double
+function MutiesDiary.Player:writtenAt(hours)
+    local data = self:data();
+    data.lastWritten = hours;
+end
+
 ---@param day int
 function MutiesDiary.Player:forgetDay(day)
     self:rememberedXp()[day] = nil;
@@ -127,16 +139,36 @@ function MutiesDiary.Player:skillBoosts()
     return data.MutiesDiary.skillBoosts;
 end
 
-function MutiesDiary.Player:skillBoost(skill)
+function MutiesDiary.Player:skillBoost(perk)
     local skillBoosts = self:skillBoosts();
-    skillBoosts[skill] = skillBoosts[skill] or 0.0;
-    return skillBoosts[skill];
+    skillBoosts[perk] = skillBoosts[perk] or 0.0;
+    return skillBoosts[perk];
+end
+
+function MutiesDiary.Player:boostLevels(skill)
+    local perk = PerkFactory.getPerkFromName(skill);
+    local skillLevel = self:perkLevel(perk);
+    local boostStart = skillLevel + 1;
+    local boostEnd = skillLevel + 2;
+    if skillLevel % 2 == 1 then
+        boostStart = boostStart - 1;
+        boostEnd = boostEnd - 1;
+    end
+    return boostStart, boostEnd;
+end
+
+function MutiesDiary.Player:skillBoostMultiplier(skill)
+    local perk = PerkFactory.getPerkFromName(skill);
+    local flatValue = self:skillBoost(perk);
+    local boostStart, boostEnd = self:boostLevels(skill);
+    local xpRequired = perk:getXpForLevel(boostStart) + perk:getXpForLevel(boostEnd);
+    return math.min(1.0, flatValue / xpRequired);
 end
 
 function MutiesDiary.Player:canStudy(entry)
     for skill, xp in pairs(entry.xp) do
-        if self:skillBoost(skill) < xp then
-            local perk = PerkFactory.getPerkFromName(skill);
+        local perk = PerkFactory.getPerkFromName(skill);
+        if self:skillBoost(perk) < xp then
             return self:perkLevel(perk) <= entry.skillLevels[skill];
         end
     end
@@ -149,7 +181,7 @@ function MutiesDiary.Player:markNewestEntryAsRead(diary)
 end
 
 ---@private
-------@param diary MutiesDiary.Diary
+---@param diary MutiesDiary.Diary
 function MutiesDiary.Player:readEntry(diary, entry)
     local traits = self:traits();
     local traitSet = {};
@@ -175,7 +207,10 @@ function MutiesDiary.Player:readEntry(diary, entry)
     end
     for skill, xp in pairs(entry.xp) do
         local perk = PerkFactory.getPerkFromName(skill);
+        local boost = self:skillBoost(perk);
+        self.skillBoosts[perk] = 0.0;
         self.player:getXp():AddXP(perk, xp, false, true, false);
+        self.skillBoosts[perk] = boost;
     end
     local recipes = entry.recipes;
     for i = 1, #recipes do
@@ -200,7 +235,23 @@ function MutiesDiary.Player:studyEntry(entry)
     for skill, xp in pairs(entry.xp) do
         local perk = PerkFactory.getPerkFromName(skill);
         if self:perkLevel(perk) <= entry.skillLevels[skill] then
-            self:skillBoosts()[skill] = math.max(xp, self:skillBoost(skill));
+            local boostStart, boostEnd = self:boostLevels(skill);
+            local oldMultiplier = 1.0 + self:skillBoostMultiplier(skill);
+            local currentMultiplier = self.player:getXp():getMultiplier(perk);
+            local foreignMultiplier = currentMultiplier / oldMultiplier;
+            if currentMultiplier ~= currentMultiplier then
+                foreignMultiplier = 1.0;
+            end
+            foreignMultiplier = foreignMultiplier * 10.0;
+            foreignMultiplier = math.floor(foreignMultiplier + 0.5);
+            foreignMultiplier = foreignMultiplier / 10.0;
+            self:skillBoosts()[perk] = math.max(xp, self:skillBoost(perk));
+            self.player:getXp():addXpMultiplier(
+                    perk,
+                    foreignMultiplier * (1.0 + self:skillBoostMultiplier(skill)),
+                    boostStart,
+                    boostEnd
+            );
         end
     end
 end
