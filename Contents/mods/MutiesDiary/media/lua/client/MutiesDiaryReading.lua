@@ -145,9 +145,9 @@ function ISReadABook:checkMultiplier()
     postCheckMultiplier(player, perk, studyMultiplier, boostStart, boostEnd);
 end
 
-local originalISReadABooKUpdate = ISReadABook.update;
+local originalISReadABookUpdate = ISReadABook.update;
 function ISReadABook:update()
-    originalISReadABooKUpdate(self);
+    originalISReadABookUpdate(self);
     updateReadStatus(self, false);
 end
 

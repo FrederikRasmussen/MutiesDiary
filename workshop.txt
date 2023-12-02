@@ -1,54 +1,49 @@
 version=1
 id=2913487911
 title=Mutie's Diary
-description=[h2]Functionality[/h2]
-description=
-description=Adds a craftable diary item. Each day, your experiences will be remembered and can be written down in the journal. This means you can only write down experiences from days that have fully passed (triggers at midnight).
-description=
-description=You write down all XP earned for the day (before multipliers) and all recipes you know in each entry. If you die and make a new character, you can read the diary to regain all the XP (and apply your current multipliers). This means you'll have to re-read skill books as you re-read your diary. You'll regain a whole day's worth of XP at once and it will work like individual pages in a skill book.
-description=
-description=If your traits differ from the person who wrote the entry, you'll have a penalty applied for each trait's difference. By default, some traits (strength/fitness and weight related) are ignored.
-description=
-description=It is also possible to study a diary (even others' diaries can be studied!). When studying, you'll look for entries that have XP in skills that are equal to or higher than your current skill level. When you find an entry, you'll read it carefully and gain an XP boost for as much XP as was in that entry. Only the best entry read applies.
-description=
-description=Studying is adjustable with sandbox settings. Traits ignored are also adjustable.
-description=
-description=[h2]Compatibility[/h2]
-description=
-description=Should be compatible with any mod that modifies reading speed or lets you walk / sit while reading.
-description=
-description=Not compatible with [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2503622437]Skill Recovery Journal.[/url]
-description=
-description=[h2]Translation[/h2]
-description=
-description=Currently, the mod only has translation for English, and not everything is properly localised for that, and instead shows IDs ("IGUI_Study" instead of "Study")
-description=
-description=[h2]Upcoming[/h2]
-description=
-description=[list]
-description=[*] Proper translation for English
-description=[*] Tooltip in skills menu to show XP boost from studying
-description=[*] Tooltip on diary to show stored recipes
-description=[*] Sandbox settings for recipe recovery speed
-description=[*] Sandbox settings for XP storage/retrieval percentages
-description=[*] Sandbox setting to ignore VHS xp
-description=[*] Support for Mod Options to edit tooltip detail shown
-description=[*] Writing down today pre-emptively so you can always write in your journal
-description=[/list]
-description=
-description=[h2]Promotion[/h2]
-description=
-description=Also check out my other mods:
-description=[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2845019579]Mutie's Bait Tooltips[/url]
-description=[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2843476927]Mutie's Evolved Recipe Tooltips[/url]
-description=
-description=[h2]Credits[/h2]
-description=
-description=Large parts of this mod are inspired by [url=https://steamcommunity.com/id/Chuckleberry_Finn/myworkshopfiles/?appid=108600]Chuckleberry Finn's[/url] excellent [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2503622437]Skill Recovery Journal[/url]
-description=While no code has been directly re-used, it has been used extensively as a reference material.
-description=
-description=In accordance with Chuckleberry's license for Skill Recovery Journal, the source code for this project is available [url=https://github.com/FrederikRasmussen/MutiesDiary]on GitHub[/url]
-description=
+description=[h2]Functionality[/h2]
+description=
+description=Adds a craftable diary item. Each day, your experiences will be remembered and can be written down in the journal. This means you can only write down experiences from days that have fully passed (triggers at midnight).
+description=
+description=You write down all XP earned for the day (before multipliers) and all recipes you know in each entry. If you die and make a new character, you can read the diary to regain all the XP (and apply your current multipliers). This means you'll have to re-read skill books as you re-read your diary. You'll regain a whole day's worth of XP at once and it will work like individual pages in a skill book.
+description=
+description=If your traits differ from the person who wrote the entry, you'll have a penalty applied for each trait's difference. By default, some traits (strength/fitness and weight related) are ignored.
+description=
+description=It is also possible to study a diary (even others' diaries can be studied!). When studying, you'll look for entries that have XP in skills that are equal to or higher than your current skill level. When you find an entry, you'll read it carefully and gain an XP boost for as much XP as was in that entry. Only the best entry read applies.
+description=
+description=Studying is adjustable with sandbox settings. Traits ignored are also adjustable.
+description=
+description=[h2]Compatibility[/h2]
+description=
+description=Should be compatible with any mod that modifies reading speed or lets you walk / sit while reading.
+description=
+description=Not compatible with [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2503622437]Skill Recovery Journal.[/url]
+description=
+description=[h2]Translation[/h2]
+description=
+description=Currently, the mod only has translation for English, and not everything is properly localised for that, and instead shows IDs ("IGUI_Study" instead of "Study")
+description=
+description=[h2]Upcoming[/h2]
+description=
+description=[list]
+description=[*] Tooltip on diary to show stored recipes
+description=[*] Support for Mod Options to edit tooltip detail shown
+description=[/list]
+description=
+description=[h2]Promotion[/h2]
+description=
+description=Also check out my other mods:
+description=[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2845019579]Mutie's Bait Tooltips[/url]
+description=[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2843476927]Mutie's Evolved Recipe Tooltips[/url]
+description=[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3101668503]Muties' Context Menu Icons[/url]
+description=
+description=[h2]Credits[/h2]
+description=
+description=Large parts of this mod are inspired by [url=https://steamcommunity.com/id/Chuckleberry_Finn/myworkshopfiles/?appid=108600]Chuckleberry Finn's[/url] excellent [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2503622437]Skill Recovery Journal[/url]
+description=While no code has been directly re-used, it has been used extensively as a reference material.
+description=
+description=In accordance with Chuckleberry's license for Skill Recovery Journal, the source code for this project is available [url=https://github.com/FrederikRasmussen/MutiesDiary]on GitHub[/url]
+description=
 description=[hr]
 tags=Build 41;Items;Literature;Misc;Multiplayer
 visibility=public

@@ -162,7 +162,7 @@ function MutiesDiary.Player:skillBoostMultiplier(skill)
     local flatValue = self:skillBoost(perk);
     local boostStart, boostEnd = self:boostLevels(skill);
     local xpRequired = perk:getXpForLevel(boostStart) + perk:getXpForLevel(boostEnd);
-    return math.min(1.0, flatValue / xpRequired);
+    return math.min(1.0 * MutiesDiary.studyMultiplier, (flatValue / xpRequired) * MutiesDiary.studyMultiplier);
 end
 
 function MutiesDiary.Player:canStudy(entry)
@@ -209,7 +209,10 @@ function MutiesDiary.Player:readEntry(diary, entry)
         local perk = PerkFactory.getPerkFromName(skill);
         local boost = self:skillBoost(perk);
         self.skillBoosts[perk] = 0.0;
+        local previousProteins = self.player:getNutrition():getProteins();
+        self.player:getNutrition():setProteins(100.0);
         self.player:getXp():AddXP(perk, xp, false, true, false);
+        self.player:getNutrition():setProteins(previousProteins);
         self.skillBoosts[perk] = boost;
     end
     local recipes = entry.recipes;
